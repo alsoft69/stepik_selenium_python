@@ -27,15 +27,14 @@ def browser():
     yield browser
     browser.quit()
 
+@pytest.mark.parametrize('links', urls)
 def test_compute(browser):
     for link in links:
         browser.get(link)
         time.sleep(10)
         answer = WebDriverWait(browser, 10).until(
-            EC.visibility_of_element_located((By.CLASS_NAME, 'ember_view')))
-        ans = browser.find_element(By.CLASS_NAME, 'ember_view')
-        if ans: print('Found ans')
-        ans.send_keys(compute())
+            EC.visibility_of_element_located((By.CSS_SELECTOR, '.textarea')))
+        answer.send_keys(str(compute()))
         txt = browser.find_element(By.ID, 'code-run_notify').get()
         print(txt)
         

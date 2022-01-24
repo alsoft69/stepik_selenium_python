@@ -36,13 +36,17 @@ def test_compute(browser, links):
     browser.implicitly_wait(10)
     browser.get(link)
     time.sleep(5)
-    text = WebDriverWait(browser, 15).until(
-        EC.element_to_be_clickable-it((By.CLASS_NAME, 'quiz-component')))
-    text.send_key(str(compute()))
-    but = browser.WebDriverWait(browser, 10).until(
-        EC.element_to_be_clickable(By.TAG, 'button'))
+    answer = WebDriverWait(browser, 10).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, '.textarea')))
+    answer.send_keys(str(compute()))
+    but = WebDriverWait(browser, 10).until(
+        EC.element_to_be_clickable((By.CSS_SELECTOR, '.submit-submission')))
     but.click()
-    input()
+    feed = WebDriverWait(browser, 5).until(
+        EC.visibility_of_element_located((By.CSS_SELECTOR,
+                                          '.smart-hints__hint'))).text
+    print(feed)
+    
 
 
         
